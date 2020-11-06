@@ -20,3 +20,20 @@ body {
     font-size: 30px;
     text-align: center;
 }
+.black {
+    background: gray;
+}
+.blackchips{
+    background: black;
+}
+.redchips{
+    background: rgb(199, 34, 34);
+}
+.chips {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    position: absolute;
+    border: 4px solid white;
+    cursor: pointer;
+}
