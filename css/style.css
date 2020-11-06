@@ -1,23 +1,22 @@
-
 body {
-    /* background-color: black; */
     text-align: center;
-    /* color: white; */
-  }
+}
+
 #container {
-    width:45vw; 
-    height:40vw;
-    margin:0 auto;
-    background:gold; 
+    width: 45vw;
+    height: 40vw;
+    margin: 0 auto;
+    background: gold;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
     grid-template-rows: repeat(8, 1fr);
     gap: 2px 3px;
-  }
+}
+
 .piece {
     background-color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(0, 0, 0, 0.8);
     padding: 20px;
     font-size: 30px;
     text-align: center;
-  }
+}
