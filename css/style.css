@@ -19,6 +19,9 @@ body {
     padding: 11%;
     font-size: 30px;
     text-align: center;
+    /* transition : box-shadow,margin,border 0.2s; */
+    transition: all 0.2s ease;
+    transition-property: box-shadow, height, width, margin, font-size;
     
 }
 .highlighted { 
