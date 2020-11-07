@@ -88,7 +88,7 @@ function movePiece(from,to) {
     squares[to].classList.toggle('hasChip');
     squares[from].innerHTML = '';
     squares[from].classList.toggle('hasChip');
-    console.log(from,to);
+    // console.log(from,to);
 
 }
 
