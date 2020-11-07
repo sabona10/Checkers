@@ -10,11 +10,17 @@ let winner;
 let board = document.getElementById('container');
 let button = document.getElementById('playAgain');
 let message = document.querySelector('h2');
+// let chip = document.query
 
 
 /*------ event listeners ----- */
-board.addEventListener('click', handleClick);
+
+for (var i = 0; i < board.getElementsByClassName('piece').length; i++) {
+    board.getElementsByClassName('piece')[i].addEventListener('click', handleClick, false);
+}
+// board.addEventListener('click', handleClick);
 button.addEventListener('click', init);
+
 
 
 /*------ functions ----- */
@@ -65,8 +71,13 @@ function renderBoard(){
     //make board, changing classes to 
     
 } 
-
+function myFunction(){
+    console.log(this);
+}
 function handleClick(){
     //make board, changing classes to 
-    
+    // for (var i = 0; i < this.getElementsByClassName('piece').length; i++) {
+    //     this.getElementsByClassName('piece')[i].addEventListener('click', myFunction, false);
+    // }
+    console.log(this)
 } 
