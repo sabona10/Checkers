@@ -1,7 +1,7 @@
 /*------ app states ----- */
 
 let moves;
-let turn;
+let turn = 1;
 let winner;
 
 /*------ cached element references ----- */
@@ -27,7 +27,7 @@ button.addEventListener("click", init);
 init();
 
 function init() {
-  turn = 1;
+  
   winner = null;
   renderBoard();
 }
@@ -75,7 +75,7 @@ function movePiece(from, to) {
 
   // console.log(squares[from])
   // squares[from].classList.toggle(squares[from].classList[squares[from].classList.length-1])
-  console.log(from, to);
+//   console.log(from, to);
   squares[to].appendChild(squares[from].firstElementChild);
   // squares[to].classList.toggle(squares[to].classList[squares[to].classList.length-1])
   squares[to].classList.toggle("hasChip");
@@ -151,6 +151,8 @@ function handleClick() {
   //     this.getElementsByClassName('piece')[i].addEventListener('click', myFunction, false);
   // }
 
+  
+  
   if (this.matches(".highlighted")) {
     this.classList.toggle("highlighted");
     // this.classList.toggle(this.classList[this.classList.length-1]);
@@ -162,6 +164,9 @@ function handleClick() {
     movePiece(from, this.id - 1);
     // console.log(this.classList[this.classList.length-1]);
 
+    if(!document.getElementsByClassName('redchips').length) console.log("black wins");
+    if(!document.getElementsByClassName('blackchips').length) console.log("red wins");
+    turn = Math.abs(turn-1);
     clearHighlights();
 
     return;
@@ -169,6 +174,24 @@ function handleClick() {
   } else clearHighlights();
 
   clearHighlights();
+  if (this.firstElementChild != null && this.firstElementChild.classList.contains("redchips")  != turn) return;
+  
+//   if (this.firstElementChild != null && this.firstElementChild.classList.contains("blackchips")) {
+//       if (turn != 1) {
+//         return;
+//       }
+      
+//       //   return;
+//     }else if (this.firstElementChild != null && this.firstElementChild.classList.contains("redchips")){
+//         if (turn == 1){ 
+//             return;
+//         }
+//         // if (this.firstElementChild != null && this.firstElementChild.classList.contains("blackchips")  == turn) return;
+
+//     }
+//   if (this.firstElementChild != null && !this.firstElementChild.classList.contains("redchips")  == turn) return;
+//   if (this.firstElementChild != null && !this.firstElementChild.classList.contains("blackchips")  == turn) return;
+//   if (this.firstElementChild.classList.contains("redchips")  != turn) return;
 
   if (
     this.matches(".hasChip") &&
@@ -317,4 +340,6 @@ function handleClick() {
 
     // }
   }
+
+  
 }
