@@ -79,5 +79,5 @@ function handleClick(){
     // for (var i = 0; i < this.getElementsByClassName('piece').length; i++) {
     //     this.getElementsByClassName('piece')[i].addEventListener('click', myFunction, false);
     // }
-    console.log(this)
+    console.log(this);
 } 
