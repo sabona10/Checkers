@@ -83,12 +83,59 @@ function movePiece(from,to) {
 
     // console.log(squares[from])
     // squares[from].classList.toggle(squares[from].classList[squares[from].classList.length-1])
+    console.log(from,to);
     squares[to].appendChild(squares[from].firstElementChild);
     // squares[to].classList.toggle(squares[to].classList[squares[to].classList.length-1])
     squares[to].classList.toggle('hasChip');
     squares[from].innerHTML = '';
     squares[from].classList.toggle('hasChip');
-    // console.log(from,to);
+    if (Math.abs(from-to)>10){
+        //remove chip with remove# class
+        // var elements = ;
+        // let elements = document.getElementsByClassName('black');
+        // for (var i = 0; i < elements.length; i++) {
+            squares[to].classList.forEach(name => {
+                if(name.substring(0,3) === 'rmv') {
+                    console.log("heere");
+                    squares[eval(name.substring(3,name.length))].innerHTML = '';
+                    squares[eval(name.substring(3,name.length))].classList.toggle('hasChip');
+                    squares[to].classList.remove(name);
+                }
+                if(!isNaN(name)) squares[to].classList.remove(name);
+                // console.log(name)
+                })
+        // }
+
+        var elements = document.getElementsByClassName('black');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].classList.forEach(name => {
+                if(name.substring(0,3) === 'rmv') {
+                    // squares[eval(name.substring(3,name.length))].innerHTML = '';
+                    // squares[eval(name.substring(3,name.length))].classList.toggle('hasChip');
+                    elements[i].classList.remove(name);
+                }
+                if(!isNaN(name)) elements[i].classList.remove(name);
+                // console.log(name)
+                })
+            }
+        
+        
+        console.log('remove chip');
+    }else {
+        //remove class remove# from every element
+        let elements = document.getElementsByClassName('black');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].classList.forEach(name => {
+                if(name.substring(0,3) === 'rmv') {
+                    // squares[eval(name.substring(3,name.length))].innerHTML = '';
+                    // squares[eval(name.substring(3,name.length))].classList.toggle('hasChip');
+                    elements[i].classList.remove(name);
+                }
+                if(!isNaN(name)) elements[i].classList.remove(name);
+                // console.log(name)
+                })
+            }
+    }
 
 }
 
@@ -96,8 +143,16 @@ function giveOptions(pieceClicked){
 
 }
 
-function clearOptions(){
-
+function clearHighlights(){
+let elements = document.getElementsByClassName('piece');
+        for (var i = 0; i < elements.length; i++) {
+            elements[i].classList.forEach(name => {
+                if(name === 'highlighted') elements[i].classList.remove(name);
+                if(!isNaN(name)) elements[i].classList.remove(name);
+                if(name.substring(0,3) === 'rmv') elements[i].classList.remove(name);
+                // console.log(name)
+                })
+            }
 }
 
 function handleClick() {
@@ -109,57 +164,101 @@ function handleClick() {
     if (this.matches('.highlighted')){
         this.classList.toggle('highlighted');
         // this.classList.toggle(this.classList[this.classList.length-1]);
-        movePiece(this.classList[this.classList.length-1], this.id-1);
-        // console.log(this.classList[this.classList.length-1]);
-
-        
-        let elements = document.getElementsByClassName('black');
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].classList.forEach(name => {
-                if(name === 'highlighted') elements[i].classList.remove(name);
-                if(!isNaN(name)) elements[i].classList.remove(name);
+        this.classList.forEach(name => {
+                // if(name === 'highlighted') elements[i].classList.remove(name);
+                if(!isNaN(name)) from = name;
                 // console.log(name)
                 })
-            }
+        movePiece(from, this.id-1);
+        // console.log(this.classList[this.classList.length-1]);
+
+        clearHighlights()
+        
         return;
         // throw new Error();
         
     }
+    else clearHighlights();
+
+    clearHighlights()
+
 
     if (this.matches('.hasChip') && this.firstElementChild.classList.contains('blackchips')) {
         nextMoves = [eval(this.id) + 9, eval(this.id) + 7];
         //get option for black
         if (!squares[nextMoves[0] - 1].matches('.hasChip') && squares[nextMoves[0] - 1].matches('.black')) {
-            squares[nextMoves[0] - 1].classList.toggle('highlighted');
-            squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            console.log("yaay");
-            console.log("---");
+            squares[nextMoves[0] - 1].classList.add('highlighted',(this.id - 1));
+            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
+            // console.log("yaay");
+            // console.log("---");
             //cant move for now
+        }else if(squares[nextMoves[0] - 1].matches('.hasChip') && !squares[nextMoves[0] - 1].firstElementChild.classList.contains('blackchips') && !squares[(nextMoves[0]+9) - 1].matches('.hasChip') && squares[(nextMoves[0]+9) - 1].matches('.black')){
+            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
+            squares[(nextMoves[0]+9) - 1].classList.add('highlighted',('rmv'+(nextMoves[0] - 1)),(this.id - 1));
+            // squares[(nextMoves[0]+9) - 1].classList.toggle('highlighted');
+            // squares[(nextMoves[0]+9) - 1].classList.toggle('rmv'+(nextMoves[0] - 1));
+            // squares[(nextMoves[0]+9) - 1].classList.toggle(this.id - 1);
         }
         if (!squares[nextMoves[1] - 1].matches('.hasChip') && squares[nextMoves[1] - 1].matches('.black')) {
-            squares[nextMoves[1] - 1].classList.toggle('highlighted');
-            squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-            console.log("yee");
-            console.log("----");
+            squares[nextMoves[1] - 1].classList.add('highlighted',(this.id - 1));
+            // squares[nextMoves[1] - 1].classList.toggle('highlighted');
+            // squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
+            // console.log("yee");
+            // console.log("----");
+        }else if(squares[nextMoves[1] - 1].matches('.hasChip') && !squares[nextMoves[1] - 1].firstElementChild.classList.contains('blackchips') && !squares[(nextMoves[1]+7) - 1].matches('.hasChip') && squares[(nextMoves[1]+7) - 1].matches('.black')){
+            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
+            squares[(nextMoves[1]+7) - 1].classList.add('highlighted',('rmv'+(nextMoves[1] - 1)),(this.id - 1));
+            // squares[(nextMoves[1]+7) - 1].classList.toggle('highlighted');
+            // squares[(nextMoves[1]+7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
+            // squares[(nextMoves[1]+7) - 1].classList.toggle(this.id - 1);
         }
 
         // console.log(squares[nextMoves[0]-1]);
         // console.log(nextMoves)
-    } else if (this.matches('.hasChip') && this.firstElementChild.classList.contains('redchips')) {
+    } else if (this.matches('.hasChip.black') && this.firstElementChild.classList.contains('redchips')) {
         //option for red chips
         nextMoves = [eval(this.id) - 9, eval(this.id) - 7];
+
         if (!squares[nextMoves[0] - 1].matches('.hasChip') && squares[nextMoves[0] - 1].matches('.black')) {
-            squares[nextMoves[0] - 1].classList.toggle('highlighted');
-            squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            console.log("yaay");
-            console.log("---");
+            squares[nextMoves[0] - 1].classList.add('highlighted',(this.id - 1));
+            // squares[nextMoves[0] - 1].classList.toggle('highlighted');
+            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
+            // console.log("yaay");
+            // console.log("---");
             //cant move for now
+        }else if(squares[nextMoves[0] - 1].matches('.hasChip') && !squares[nextMoves[0] - 1].firstElementChild.classList.contains('redchips')&& !squares[(nextMoves[0]-9) - 1].matches('.hasChip') && squares[(nextMoves[0]-9) - 1].matches('.black')){
+            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
+            squares[(nextMoves[0]-9) - 1].classList.add('highlighted',('rmv'+(nextMoves[0] - 1)),(this.id - 1));
+            // squares[(nextMoves[0]-9) - 1].classList.toggle('highlighted');
+            // squares[(nextMoves[0]-9) - 1].classList.toggle('rmv'+(nextMoves[0] - 1));
+            // squares[(nextMoves[0]-9) - 1].classList.toggle(this.id - 1);
         }
+
+        // if (!squares[nextMoves[0] - 1].matches('.hasChip') && squares[nextMoves[0] - 1].matches('.black')) {
+        //     squares[nextMoves[0] - 1].classList.toggle('highlighted');
+        //     squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
+        //     console.log("yaay");
+        //     console.log("---");
+        //     //cant move for now
+        // }
+        // if (!squares[nextMoves[1] - 1].matches('.hasChip') && squares[nextMoves[1] - 1].matches('.black')) {
+        //     squares[nextMoves[1] - 1].classList.toggle('highlighted');
+        //     squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
+        //     console.log("yee");
+        //     console.log("----");
+        // }
         if (!squares[nextMoves[1] - 1].matches('.hasChip') && squares[nextMoves[1] - 1].matches('.black')) {
-            squares[nextMoves[1] - 1].classList.toggle('highlighted');
-            squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-            console.log("yee");
-            console.log("----");
+            squares[nextMoves[1] - 1].classList.add('highlighted',(this.id - 1));
+            // squares[nextMoves[1] - 1].classList.toggle('highlighted');
+            // squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
+            // console.log("yee");
+            // console.log("----");
+        }else if(squares[nextMoves[1] - 1].matches('.hasChip') && !squares[nextMoves[1] - 1].firstElementChild.classList.contains('redchips')&& !squares[(nextMoves[1]-7) - 1].matches('.hasChip') && squares[(nextMoves[1]-7) - 1].matches('.black')){
+            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
+            squares[(nextMoves[1]-7) - 1].classList.add('highlighted',('rmv'+(nextMoves[1] - 1)),(this.id - 1));
+            // squares[(nextMoves[1]-7) - 1].classList.toggle('highlighted');
+            // squares[(nextMoves[1]-7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
+            // squares[(nextMoves[1]-7) - 1].classList.toggle(this.id - 1);
         }
         // console.log(nextMoves)
         // }
