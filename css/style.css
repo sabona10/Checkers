@@ -38,7 +38,7 @@ body {
   background-color: black !important;
 }
 .redchips {
-  background-color: rgb(199, 34, 34) !important;;
+  background-color: rgb(199, 34, 34) !important;
 }
 .chips {
   width: 100%;
@@ -49,7 +49,7 @@ body {
 }
 
 .queenchip {
-  background: url("https://www.iconsdb.com/icons/preview/white/chess-33-xxl.png")
+  background: url("../queen.png")
     center no-repeat;
   background-size: 75%;
 }

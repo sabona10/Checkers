@@ -1,8 +1,6 @@
 /*------ app states ----- */
 
-let moves;
 let turn = 1;
-let winner;
 
 /*------ cached element references ----- */
 
@@ -60,11 +58,7 @@ function renderBoard() {
             }
         }
     }
-    //make board, changing classes to
 }
-// function myFunction(){
-//     console.log(this);
-// }
 let nextMove;
 
 function movePiece(from, to) {
@@ -74,7 +68,7 @@ function movePiece(from, to) {
 
     // console.log(squares[from])
     // squares[from].classList.toggle(squares[from].classList[squares[from].classList.length-1])
-      console.log(from, to);
+    console.log(from, to);
     squares[to].appendChild(squares[from].firstElementChild);
     // squares[to].classList.toggle(squares[to].classList[squares[to].classList.length-1])
     squares[to].classList.toggle("hasChip");
@@ -129,12 +123,12 @@ function movePiece(from, to) {
         }
     }
 
-    if (!document.getElementsByClassName("redchips").length){
+    if (!document.getElementsByClassName("redchips").length) {
         message.textContent = `black wins`;
         return;
     }
-        // console.log("black wins");
-    if (!document.getElementsByClassName("blackchips").length){
+    // console.log("black wins");
+    if (!document.getElementsByClassName("blackchips").length) {
         message.textContent = `red wins`;
         return;
     }
@@ -157,110 +151,98 @@ function clearHighlights() {
 }
 
 function handleClick() {
-
-    if (!document.getElementsByClassName("redchips").length){
+    if (!document.getElementsByClassName("redchips").length) {
         message.textContent = `black wins`;
         return;
     }
-        // console.log("black wins");
-    if (!document.getElementsByClassName("blackchips").length){
+    // console.log("black wins");
+    if (!document.getElementsByClassName("blackchips").length) {
         message.textContent = `red wins`;
         return;
     }
     message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
-    //make board, changing classes to
-    // for (var i = 0; i < this.getElementsByClassName('piece').length; i++) {
-    //     this.getElementsByClassName('piece')[i].addEventListener('click', myFunction, false);
-    // }
 
     if (this.matches(".highlighted")) {
         this.classList.toggle("highlighted");
-        // this.classList.toggle(this.classList[this.classList.length-1]);
         this.classList.forEach((name) => {
             // if(name === 'highlighted') elements[i].classList.remove(name);
             if (!isNaN(name)) from = name;
             // console.log(name)
         });
         movePiece(from, this.id - 1);
-        // console.log(this.classList[this.classList.length-1]);
         let anotherMove = 0;
-        if (
-            this.matches(".hasChip") 
-        ) {
+        if (this.matches(".hasChip")) {
             nextMoves = [eval(this.id) + 9, eval(this.id) + 7];
             //get option for black
             if (
-                (nextMoves[0] +9 - 1) <64 &&
+                nextMoves[0] + 9 - 1 < 64 &&
                 squares[nextMoves[0] - 1].matches(".hasChip") &&
                 !squares[nextMoves[0] - 1].firstElementChild.classList.contains(
                     "blackchips"
                 ) &&
                 !squares[nextMoves[0] + 9 - 1].matches(".hasChip") &&
                 squares[nextMoves[0] + 9 - 1].matches(".black")
-            ) {
-                // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-                // dont change turns
-                anotherMove = 1;
-            }
+            ) anotherMove = 1;
+            
             if (
-                (nextMoves[1]+9 - 1) <64 &&
+                nextMoves[1] + 9 - 1 < 64 &&
                 squares[nextMoves[1] - 1].matches(".hasChip") &&
                 !squares[nextMoves[1] - 1].firstElementChild.classList.contains(
                     "blackchips"
                 ) &&
                 !squares[nextMoves[1] + 7 - 1].matches(".hasChip") &&
                 squares[nextMoves[1] + 7 - 1].matches(".black")
-            ) {
-                // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-                //dont change turns
-                anotherMove = 1;
-            }
-        } if (
-            this.matches(".hasChip") 
+            ) anotherMove = 1;
+            
+        }
+        if (
+            this.matches(".hasChip")
             // (eval(this.id) - 18) > 0 &&
-            // (eval(this.id) - 14) > 0 
+            // (eval(this.id) - 14) > 0
         ) {
             //option for red chips
             nextMoves = [eval(this.id) - 9, eval(this.id) - 7];
 
             if (
-                (nextMoves[0] - 9-1) > 0 &&
+                nextMoves[0] - 9 - 1 > 0 &&
                 squares[nextMoves[0] - 1].matches(".hasChip") &&
                 !squares[nextMoves[0] - 1].firstElementChild.classList.contains(
                     "redchips"
                 ) &&
                 !squares[nextMoves[0] - 9 - 1].matches(".hasChip") &&
                 squares[nextMoves[0] - 9 - 1].matches(".black")
-            ) {
-                // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-                anotherMove = 1;
-            }
+            )anotherMove = 1;
+            
 
             if (
-                (nextMoves[1] - 7-1) > 0 &&
+                nextMoves[1] - 7 - 1 > 0 &&
                 squares[nextMoves[1] - 1].matches(".hasChip") &&
                 !squares[nextMoves[1] - 1].firstElementChild.classList.contains(
                     "redchips"
                 ) &&
                 !squares[nextMoves[1] - 7 - 1].matches(".hasChip") &&
                 squares[nextMoves[1] - 7 - 1].matches(".black")
-            ) {
-                // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-                anotherMove = 1;
-                // squares[(nextMoves[1]-7) - 1].classList.toggle('highlighted');
-                // squares[(nextMoves[1]-7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
-                // squares[(nextMoves[1]-7) - 1].classList.toggle(this.id - 1);
-            }
+            )anotherMove = 1;
         }
 
-        console.log(anotherMove, Math.abs(from - (this.id - 1)))
+        console.log(anotherMove, Math.abs(from - (this.id - 1)));
         message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
         if (anotherMove && Math.abs(from - (this.id - 1)) > 10) {
             anotherMove = 0;
             return;
         }
-        if(this.firstElementChild.classList.contains('blackchips') && !this.firstElementChild.classList.contains('queenchip') && this.id >= 57 ) this.firstElementChild.classList.add('queenchip');
-        if(this.firstElementChild.classList.contains('redchips') && !this.firstElementChild.classList.contains('queenchip') && this.id <= 8 ) this.firstElementChild.classList.add('queenchip');
+        if (
+            this.firstElementChild.classList.contains("blackchips") &&
+            !this.firstElementChild.classList.contains("queenchip") &&
+            this.id >= 57
+        )
+            this.firstElementChild.classList.add("queenchip");
+        if (
+            this.firstElementChild.classList.contains("redchips") &&
+            !this.firstElementChild.classList.contains("queenchip") &&
+            this.id <= 8
+        )
+            this.firstElementChild.classList.add("queenchip");
 
         turn = Math.abs(turn - 1);
         message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
@@ -277,469 +259,140 @@ function handleClick() {
     )
         return;
 
-    //   if (this.firstElementChild != null && this.firstElementChild.classList.contains("blackchips")) {
-    //       if (turn != 1) {
-    //         return;
-    //       }
-
-    //       //   return;
-    //     }else if (this.firstElementChild != null && this.firstElementChild.classList.contains("redchips")){
-    //         if (turn == 1){
-    //             return;
-    //         }
-    //         // if (this.firstElementChild != null && this.firstElementChild.classList.contains("blackchips")  == turn) return;
-
-    //     }
-    //   if (this.firstElementChild != null && !this.firstElementChild.classList.contains("redchips")  == turn) return;
-    //   if (this.firstElementChild != null && !this.firstElementChild.classList.contains("blackchips")  == turn) return;
-    //   if (this.firstElementChild.classList.contains("redchips")  != turn) return;
     if (
         this.matches(".hasChip") &&
         this.firstElementChild.classList.contains("blackchips") &&
         this.firstElementChild.classList.contains("queenchip")
     ) {
-        
-        nextMoves = [eval(this.id) + 9, eval(this.id) + 7];
-        //get option for black
-        if ((nextMoves[0] -1) < 64 &&
-            !squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].matches(".black")
-        ) {
-            squares[nextMoves[0] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            // console.log("yaay");
-            // console.log("---");
-            //cant move for now
-        } if ((nextMoves[0]+9 -1) < 64 &&
-            squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].firstElementChild.classList.contains(
-                "redchips"
-            ) &&
-            !squares[nextMoves[0] + 9 - 1].matches(".hasChip") &&
-            squares[nextMoves[0] + 9 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[0] + 9 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[0] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[0]+9) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[0]+9) - 1].classList.toggle('rmv'+(nextMoves[0] - 1));
-            // squares[(nextMoves[0]+9) - 1].classList.toggle(this.id - 1);
-        }
-
-        
-        if ((nextMoves[1] -1) < 64 &&
-            !squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].matches(".black")
-        ) {
-            squares[nextMoves[1] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[1] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-            // console.log("yee");
-            // console.log("----");
-        } if ((nextMoves[1]+7 -1) < 64 &&
-            squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].firstElementChild.classList.contains(
-                "redchips"
-            ) &&
-            !squares[nextMoves[1] + 7 - 1].matches(".hasChip") &&
-            squares[nextMoves[1] + 7 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[1] + 7 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[1] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[1]+7) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[1]+7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
-            // squares[(nextMoves[1]+7) - 1].classList.toggle(this.id - 1);
-        }
-
-        // console.log(squares[nextMoves[0]-1]);
-        // console.log(nextMoves)
-        
-        //option for red chips
-        nextMoves = [eval(this.id) - 9, eval(this.id) - 7];
-
-        if ( (nextMoves[0] - 1) >= 0 &&
-            !squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].matches(".black")
-        ) {
-            squares[nextMoves[0] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[0] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            // console.log("yaay");
-            // console.log("---");
-            //cant move for now
-        } if ((nextMoves[0] - 9 - 1) >= 0 &&
-            squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].firstElementChild.classList.contains(
-                "redchips"
-            ) &&
-            !squares[nextMoves[0] - 9 - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 9 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[0] - 9 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[0] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[0]-9) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[0]-9) - 1].classList.toggle('rmv'+(nextMoves[0] - 1));
-            // squares[(nextMoves[0]-9) - 1].classList.toggle(this.id - 1);
-        }
-
-        // if (!squares[nextMoves[0] - 1].matches('.hasChip') && squares[nextMoves[0] - 1].matches('.black')) {
-        //     squares[nextMoves[0] - 1].classList.toggle('highlighted');
-        //     squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-        //     console.log("yaay");
-        //     console.log("---");
-        //     //cant move for now
-        // }
-        // if (!squares[nextMoves[1] - 1].matches('.hasChip') && squares[nextMoves[1] - 1].matches('.black')) {
-        //     squares[nextMoves[1] - 1].classList.toggle('highlighted');
-        //     squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-        //     console.log("yee");
-        //     console.log("----");
-        // }
-        if ((nextMoves[1] - 1) >= 0 &&
-            !squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].matches(".black")
-        ) {
-            squares[nextMoves[1] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[1] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-            // console.log("yee");
-            // console.log("----");
-        } if ((nextMoves[1] - 7 - 1) >= 0 &&
-            squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].firstElementChild.classList.contains(
-                "redchips"
-            ) &&
-            !squares[nextMoves[1] - 7 - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 7 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[1] - 7 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[1] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[1]-7) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[1]-7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
-            // squares[(nextMoves[1]-7) - 1].classList.toggle(this.id - 1);
-        }
-        // console.log(nextMoves)
-        // }
-        // console.log(this);
-        nextMove = this;
-        // if (!board[nextMoves[0]].matches('.hasChip')){
-
-        // }
-        return
+        ischip = this;
+        moveChip(ischip, "red", true);
     }
-    if (
-        this.matches(".hasChip") &&
-        this.firstElementChild.classList.contains("redchips") &&
-        this.firstElementChild.classList.contains("queenchip")
-    ) {
-        
-        nextMoves = [eval(this.id) + 9, eval(this.id) + 7];
-        //get option for black
-        if ((nextMoves[0] -1) < 64 &&
-            !squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].matches(".black")
-        ) {
-            squares[nextMoves[0] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            // console.log("yaay");
-            // console.log("---");
-            //cant move for now
-        } if ((nextMoves[0]+9 -1) < 64 &&
-            squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].firstElementChild.classList.contains(
-                "blackchips"
-            ) &&
-            !squares[nextMoves[0] + 9 - 1].matches(".hasChip") &&
-            squares[nextMoves[0] + 9 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[0] + 9 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[0] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[0]+9) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[0]+9) - 1].classList.toggle('rmv'+(nextMoves[0] - 1));
-            // squares[(nextMoves[0]+9) - 1].classList.toggle(this.id - 1);
-        }
-
-        
-        if ((nextMoves[1] -1) < 64 &&
-            !squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].matches(".black")
-        ) {
-            squares[nextMoves[1] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[1] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-            // console.log("yee");
-            // console.log("----");
-        } if ((nextMoves[1]+7 -1) < 64 &&
-            squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].firstElementChild.classList.contains(
-                "blackchips"
-            ) &&
-            !squares[nextMoves[1] + 7 - 1].matches(".hasChip") &&
-            squares[nextMoves[1] + 7 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[1] + 7 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[1] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[1]+7) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[1]+7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
-            // squares[(nextMoves[1]+7) - 1].classList.toggle(this.id - 1);
-        }
-
-        // console.log(squares[nextMoves[0]-1]);
-        // console.log(nextMoves)
-        
-        //option for red chips
-        nextMoves = [eval(this.id) - 9, eval(this.id) - 7];
-
-        if ( (nextMoves[0] - 1) >= 0 &&
-            !squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].matches(".black")
-        ) {
-            squares[nextMoves[0] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[0] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            // console.log("yaay");
-            // console.log("---");
-            //cant move for now
-        } if ((nextMoves[0] - 9 - 1) >= 0 &&
-            squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].firstElementChild.classList.contains(
-                "blackchips"
-            ) &&
-            !squares[nextMoves[0] - 9 - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 9 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[0] - 9 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[0] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[0]-9) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[0]-9) - 1].classList.toggle('rmv'+(nextMoves[0] - 1));
-            // squares[(nextMoves[0]-9) - 1].classList.toggle(this.id - 1);
-        }
-
-        // if (!squares[nextMoves[0] - 1].matches('.hasChip') && squares[nextMoves[0] - 1].matches('.black')) {
-        //     squares[nextMoves[0] - 1].classList.toggle('highlighted');
-        //     squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-        //     console.log("yaay");
-        //     console.log("---");
-        //     //cant move for now
-        // }
-        // if (!squares[nextMoves[1] - 1].matches('.hasChip') && squares[nextMoves[1] - 1].matches('.black')) {
-        //     squares[nextMoves[1] - 1].classList.toggle('highlighted');
-        //     squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-        //     console.log("yee");
-        //     console.log("----");
-        // }
-        if ((nextMoves[1] - 1) >= 0 &&
-            !squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].matches(".black")
-        ) {
-            squares[nextMoves[1] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[1] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-            // console.log("yee");
-            // console.log("----");
-        } if ((nextMoves[1] - 7 - 1) >= 0 &&
-            squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].firstElementChild.classList.contains(
-                "blackchips"
-            ) &&
-            !squares[nextMoves[1] - 7 - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 7 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[1] - 7 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[1] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[1]-7) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[1]-7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
-            // squares[(nextMoves[1]-7) - 1].classList.toggle(this.id - 1);
-        }
-        // console.log(nextMoves)
-        // }
-        // console.log(this);
-        nextMove = this;
-        // if (!board[nextMoves[0]].matches('.hasChip')){
-
-        // }
-        return
+    if (this.matches(".hasChip") && this.firstElementChild.classList.contains("redchips") && this.firstElementChild.classList.contains("queenchip")) {
+        ischip = this;
+        moveChip(ischip, "black", true);
     }
     if (
         this.matches(".hasChip") &&
         this.firstElementChild.classList.contains("blackchips")
     ) {
-        nextMoves = [eval(this.id) + 9, eval(this.id) + 7];
-        //get option for black
-        if ((nextMoves[0] -1) < 64 &&
-            !squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].matches(".black")
-        ) {
-            squares[nextMoves[0] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            // console.log("yaay");
-            // console.log("---");
-            //cant move for now
-        } if ((nextMoves[0]+9 -1) < 64 &&
-            squares[nextMoves[0] - 1].matches(".hasChip") &&
-            squares[nextMoves[0] - 1].firstElementChild.classList.contains(
-                "redchips"
-            ) &&
-            !squares[nextMoves[0] + 9 - 1].matches(".hasChip") &&
-            squares[nextMoves[0] + 9 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[0] + 9 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[0] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[0]+9) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[0]+9) - 1].classList.toggle('rmv'+(nextMoves[0] - 1));
-            // squares[(nextMoves[0]+9) - 1].classList.toggle(this.id - 1);
-        }
-
-        
-        if ((nextMoves[1] -1) < 64 &&
-            !squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].matches(".black")
-        ) {
-            squares[nextMoves[1] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[1] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-            // console.log("yee");
-            // console.log("----");
-        } if ((nextMoves[1]+7 -1) < 64 &&
-            squares[nextMoves[1] - 1].matches(".hasChip") &&
-            squares[nextMoves[1] - 1].firstElementChild.classList.contains(
-                "redchips"
-            ) &&
-            !squares[nextMoves[1] + 7 - 1].matches(".hasChip") &&
-            squares[nextMoves[1] + 7 - 1].matches(".black")
-        ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            squares[nextMoves[1] + 7 - 1].classList.add(
-                "highlighted",
-                "rmv" + (nextMoves[1] - 1),
-                this.id - 1
-            );
-            // squares[(nextMoves[1]+7) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[1]+7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
-            // squares[(nextMoves[1]+7) - 1].classList.toggle(this.id - 1);
-        }
-
-        // console.log(squares[nextMoves[0]-1]);
-        // console.log(nextMoves)
-    } 
+        ischip = this;
+        moveChip(ischip, "black", false);
+    }
     if (
         this.matches(".hasChip") &&
         this.firstElementChild.classList.contains("redchips")
     ) {
-        //option for red chips
-        nextMoves = [eval(this.id) - 9, eval(this.id) - 7];
+        ischip = this;
+        moveChip(ischip, "red", false);
+    }
+}
 
-        if ( (nextMoves[0] - 1) >= 0 &&
+function moveChip(thischip, chiptype, queen) {
+    chip_to_take = chiptype;
+    if (chiptype == "black" || queen) {
+        if (!queen) chip_to_take = "red";
+        nextMoves = [eval(thischip.id) + 9, eval(thischip.id) + 7];
+        //get option for black
+        if (
+            nextMoves[0] - 1 < 64 &&
             !squares[nextMoves[0] - 1].matches(".hasChip") &&
             squares[nextMoves[0] - 1].matches(".black")
         ) {
-            squares[nextMoves[0] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[0] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-            // console.log("yaay");
-            // console.log("---");
-            //cant move for now
-        } if ((nextMoves[0] - 9 - 1) >= 0 &&
+            squares[nextMoves[0] - 1].classList.add("highlighted", thischip.id - 1);
+        }
+        if (
+            nextMoves[0] + 9 - 1 < 64 &&
             squares[nextMoves[0] - 1].matches(".hasChip") &&
             squares[nextMoves[0] - 1].firstElementChild.classList.contains(
-                "blackchips"
+                chip_to_take + "chips"
+            ) &&
+            !squares[nextMoves[0] + 9 - 1].matches(".hasChip") &&
+            squares[nextMoves[0] + 9 - 1].matches(".black")
+        ) {
+            squares[nextMoves[0] + 9 - 1].classList.add(
+                "highlighted",
+                "rmv" + (nextMoves[0] - 1),
+                thischip.id - 1
+            );
+        }
+
+        if (
+            nextMoves[1] - 1 < 64 &&
+            !squares[nextMoves[1] - 1].matches(".hasChip") &&
+            squares[nextMoves[1] - 1].matches(".black")
+        ) {
+            squares[nextMoves[1] - 1].classList.add("highlighted", thischip.id - 1);
+        }
+        if (
+            nextMoves[1] + 7 - 1 < 64 &&
+            squares[nextMoves[1] - 1].matches(".hasChip") &&
+            squares[nextMoves[1] - 1].firstElementChild.classList.contains(
+                chip_to_take + "chips"
+            ) &&
+            !squares[nextMoves[1] + 7 - 1].matches(".hasChip") &&
+            squares[nextMoves[1] + 7 - 1].matches(".black")
+        ) {
+            squares[nextMoves[1] + 7 - 1].classList.add(
+                "highlighted",
+                "rmv" + (nextMoves[1] - 1),
+                thischip.id - 1
+            );
+        }
+
+    }
+    if (chiptype == "red" || queen) {
+        if (!queen) chip_to_take = "black";
+        //option for red chips
+        nextMoves = [eval(thischip.id) - 9, eval(thischip.id) - 7];
+
+        if (
+            nextMoves[0] - 1 >= 0 &&
+            !squares[nextMoves[0] - 1].matches(".hasChip") &&
+            squares[nextMoves[0] - 1].matches(".black")
+        ) {
+            squares[nextMoves[0] - 1].classList.add("highlighted", thischip.id - 1);
+        }
+        if (
+            nextMoves[0] - 9 - 1 >= 0 &&
+            squares[nextMoves[0] - 1].matches(".hasChip") &&
+            squares[nextMoves[0] - 1].firstElementChild.classList.contains(
+                chip_to_take + "chips"
             ) &&
             !squares[nextMoves[0] - 9 - 1].matches(".hasChip") &&
             squares[nextMoves[0] - 9 - 1].matches(".black")
         ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
             squares[nextMoves[0] - 9 - 1].classList.add(
                 "highlighted",
                 "rmv" + (nextMoves[0] - 1),
-                this.id - 1
+                thischip.id - 1
             );
-            // squares[(nextMoves[0]-9) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[0]-9) - 1].classList.toggle('rmv'+(nextMoves[0] - 1));
-            // squares[(nextMoves[0]-9) - 1].classList.toggle(this.id - 1);
         }
 
-        // if (!squares[nextMoves[0] - 1].matches('.hasChip') && squares[nextMoves[0] - 1].matches('.black')) {
-        //     squares[nextMoves[0] - 1].classList.toggle('highlighted');
-        //     squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
-        //     console.log("yaay");
-        //     console.log("---");
-        //     //cant move for now
-        // }
-        // if (!squares[nextMoves[1] - 1].matches('.hasChip') && squares[nextMoves[1] - 1].matches('.black')) {
-        //     squares[nextMoves[1] - 1].classList.toggle('highlighted');
-        //     squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-        //     console.log("yee");
-        //     console.log("----");
-        // }
-        if ((nextMoves[1] - 1) >= 0 &&
+        if (
+            nextMoves[1] - 1 >= 0 &&
             !squares[nextMoves[1] - 1].matches(".hasChip") &&
             squares[nextMoves[1] - 1].matches(".black")
         ) {
-            squares[nextMoves[1] - 1].classList.add("highlighted", this.id - 1);
-            // squares[nextMoves[1] - 1].classList.toggle('highlighted');
-            // squares[nextMoves[1] - 1].classList.toggle(this.id - 1);
-            // console.log("yee");
-            // console.log("----");
-        } if ((nextMoves[1] - 7 - 1) >= 0 &&
+            squares[nextMoves[1] - 1].classList.add("highlighted", thischip.id - 1);
+        }
+        if (
+            nextMoves[1] - 7 - 1 >= 0 &&
             squares[nextMoves[1] - 1].matches(".hasChip") &&
             squares[nextMoves[1] - 1].firstElementChild.classList.contains(
-                "blackchips"
+                chip_to_take + "chips"
             ) &&
             !squares[nextMoves[1] - 7 - 1].matches(".hasChip") &&
             squares[nextMoves[1] - 7 - 1].matches(".black")
         ) {
-            // squares[nextMoves[0] - 1].classList.toggle(this.id - 1);
             squares[nextMoves[1] - 7 - 1].classList.add(
                 "highlighted",
                 "rmv" + (nextMoves[1] - 1),
-                this.id - 1
+                thischip.id - 1
             );
-            // squares[(nextMoves[1]-7) - 1].classList.toggle('highlighted');
-            // squares[(nextMoves[1]-7) - 1].classList.toggle('rmv'+(nextMoves[1] - 1));
-            // squares[(nextMoves[1]-7) - 1].classList.toggle(this.id - 1);
         }
-        // console.log(nextMoves)
-        // }
-        // console.log(this);
-        nextMove = this;
-        // if (!board[nextMoves[0]].matches('.hasChip')){
+        nextMove = thischip;
 
         // }
     }
-    
+    if (queen) return;
 }
