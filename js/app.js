@@ -129,10 +129,15 @@ function movePiece(from, to) {
         }
     }
 
-    if (!document.getElementsByClassName("redchips").length)
-        console.log("black wins");
-    if (!document.getElementsByClassName("blackchips").length)
-        console.log("red wins");
+    if (!document.getElementsByClassName("redchips").length){
+        message.textContent = `black wins`;
+        return;
+    }
+        // console.log("black wins");
+    if (!document.getElementsByClassName("blackchips").length){
+        message.textContent = `red wins`;
+        return;
+    }
 
     // if()
 }
@@ -152,6 +157,16 @@ function clearHighlights() {
 }
 
 function handleClick() {
+
+    if (!document.getElementsByClassName("redchips").length){
+        message.textContent = `black wins`;
+        return;
+    }
+        // console.log("black wins");
+    if (!document.getElementsByClassName("blackchips").length){
+        message.textContent = `red wins`;
+        return;
+    }
     message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
     //make board, changing classes to
     // for (var i = 0; i < this.getElementsByClassName('piece').length; i++) {
