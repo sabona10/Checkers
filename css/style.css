@@ -1,50 +1,55 @@
 body {
-    text-align: center;
+  text-align: center;
 }
 
 #container {
-    width: 45vw;
-    height: 40vw;
-    margin: 0 auto;
-    background: gold;
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-template-rows: repeat(8, 1fr);
-    gap: 2px 3px;
+  width: 45vw;
+  height: 40vw;
+  margin: 0 auto;
+  background: gold;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  gap: 2px 3px;
 }
 
 .piece {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 11%;
-    font-size: 30px;
-    text-align: center;
-    /* transition : box-shadow,margin,border 0.2s; */
-    transition: all 0.2s ease;
-    transition-property: box-shadow, height, width, margin, font-size;
-    
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 11%;
+  font-size: 30px;
+  text-align: center;
+  /* transition : box-shadow,margin,border 0.2s; */
+  transition: all 0.2s ease;
+  transition-property: box-shadow, height, width, margin, font-size;
 }
-.highlighted { 
-    box-shadow: 0px 0px 6px 8px #0ff;
-    z-index: 1;
-    margin: 3px;
-    border: 0;
-    transition : 0.2s;
-    cursor: pointer;
+.highlighted {
+  box-shadow: 0px 0px 6px 8px #0ff;
+  z-index: 1;
+  margin: 3px;
+  border: 0;
+  transition: 0.2s;
+  cursor: pointer;
 }
 .black {
-    background: gray;
+  background: gray;
 }
-.blackchips{
-    background: black;
+.blackchips {
+  background-color: black !important;
 }
-.redchips{
-    background: rgb(199, 34, 34);
+.redchips {
+  background-color: rgb(199, 34, 34) !important;;
 }
 .chips {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 1px solid white;
-    cursor: pointer;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.queenchip {
+  background: url("https://www.iconsdb.com/icons/preview/white/chess-33-xxl.png")
+    center no-repeat;
+  background-size: 75%;
 }
