@@ -287,6 +287,10 @@ function handleClick() {
     }
 }
 
+
+console.log('wadaaap');
+
+
 function moveChip(thischip, chiptype, queen) {
     chip_to_take = chiptype;
     if (chiptype == "black" || queen) {
