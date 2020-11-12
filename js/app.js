@@ -3,6 +3,7 @@
 
 let turn = 1;
 let anotherMove = 0;
+let anothermoves =0 ;
 
 /*------ cached element references ----- */
 
@@ -156,7 +157,8 @@ function handleClick() {
             // console.log(name)
         });
         movePiece(from, this.id - 1);
-        
+
+        let anotherMove = 0;
         if (this.firstElementChild.classList.contains("blackchips") && !this.firstElementChild.classList.contains("queenchip") && this.id >= 57) {
             moves[this.id - 1].queen = true;
             this.firstElementChild.classList.add("queenchip");
@@ -190,10 +192,14 @@ function handleClick() {
 
         console.log(anotherMove, Math.abs(from - (this.id - 1)));
         message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
+        // if (anotherMove)anothermoves = 1;
         if (anotherMove && Math.abs(from - (this.id - 1)) > 10) {
-            anotherMove = 0;
+            // turn = turn+anotherMove;
+            anothermoves = 1;
             return;
         }
+        anothermoves = 0;
+        // anotherMove = 1;
         turn = Math.abs(turn - 1);
         message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
         clearHighlights();
@@ -214,11 +220,11 @@ function moveChip(thischip, chiptype, queen) {
         if (!queen) chip_to_take = "red";
         nextMoves = [eval(thischip.id) + 9, eval(thischip.id) + 7];
         //get option for black
-        if (nextMoves[0] - 1 < 64 && !squares[nextMoves[0] - 1].matches(".hasChip") && squares[nextMoves[0] - 1].matches(".black")) squares[nextMoves[0] - 1].classList.add("highlighted", thischip.id - 1);
+        if (!anothermoves && nextMoves[0] - 1 < 64 && !squares[nextMoves[0] - 1].matches(".hasChip") && squares[nextMoves[0] - 1].matches(".black")) squares[nextMoves[0] - 1].classList.add("highlighted", thischip.id - 1);
 
         if (nextMoves[0] + 9 - 1 < 64 && squares[nextMoves[0] - 1].matches(".hasChip") && squares[nextMoves[0] - 1].firstElementChild.classList.contains(chip_to_take + "chips") && !squares[nextMoves[0] + 9 - 1].matches(".hasChip") && squares[nextMoves[0] + 9 - 1].matches(".black")) squares[nextMoves[0] + 9 - 1].classList.add("highlighted", "rmv" + (nextMoves[0] - 1), thischip.id - 1);
 
-        if (nextMoves[1] - 1 < 64 && !squares[nextMoves[1] - 1].matches(".hasChip") && squares[nextMoves[1] - 1].matches(".black")) squares[nextMoves[1] - 1].classList.add("highlighted", thischip.id - 1);
+        if (!anothermoves && nextMoves[1] - 1 < 64 && !squares[nextMoves[1] - 1].matches(".hasChip") && squares[nextMoves[1] - 1].matches(".black")) squares[nextMoves[1] - 1].classList.add("highlighted", thischip.id - 1);
 
         if (nextMoves[1] + 7 - 1 < 64 && squares[nextMoves[1] - 1].matches(".hasChip") && squares[nextMoves[1] - 1].firstElementChild.classList.contains(chip_to_take + "chips") && !squares[nextMoves[1] + 7 - 1].matches(".hasChip") && squares[nextMoves[1] + 7 - 1].matches(".black")) squares[nextMoves[1] + 7 - 1].classList.add("highlighted", "rmv" + (nextMoves[1] - 1), thischip.id - 1);
     }
@@ -226,11 +232,11 @@ function moveChip(thischip, chiptype, queen) {
         if (!queen) chip_to_take = "black";
         //option for red chips
         nextMoves = [eval(thischip.id) - 9, eval(thischip.id) - 7];
-        if (nextMoves[0] - 1 >= 0 && !squares[nextMoves[0] - 1].matches(".hasChip") && squares[nextMoves[0] - 1].matches(".black")) squares[nextMoves[0] - 1].classList.add("highlighted", thischip.id - 1);
+        if (!anothermoves && nextMoves[0] - 1 >= 0 && !squares[nextMoves[0] - 1].matches(".hasChip") && squares[nextMoves[0] - 1].matches(".black")) squares[nextMoves[0] - 1].classList.add("highlighted", thischip.id - 1);
 
         if (nextMoves[0] - 9 - 1 >= 0 && squares[nextMoves[0] - 1].matches(".hasChip") && squares[nextMoves[0] - 1].firstElementChild.classList.contains(chip_to_take + "chips") && !squares[nextMoves[0] - 9 - 1].matches(".hasChip") && squares[nextMoves[0] - 9 - 1].matches(".black")) squares[nextMoves[0] - 9 - 1].classList.add("highlighted", "rmv" + (nextMoves[0] - 1), thischip.id - 1);
 
-        if (nextMoves[1] - 1 >= 0 && !squares[nextMoves[1] - 1].matches(".hasChip") && squares[nextMoves[1] - 1].matches(".black")) squares[nextMoves[1] - 1].classList.add("highlighted", thischip.id - 1);
+        if (!anothermoves && nextMoves[1] - 1 >= 0 && !squares[nextMoves[1] - 1].matches(".hasChip") && squares[nextMoves[1] - 1].matches(".black")) squares[nextMoves[1] - 1].classList.add("highlighted", thischip.id - 1);
 
         if (nextMoves[1] - 7 - 1 >= 0 && squares[nextMoves[1] - 1].matches(".hasChip") && squares[nextMoves[1] - 1].firstElementChild.classList.contains(chip_to_take + "chips") && !squares[nextMoves[1] - 7 - 1].matches(".hasChip") && squares[nextMoves[1] - 7 - 1].matches(".black")) squares[nextMoves[1] - 7 - 1].classList.add("highlighted", "rmv" + (nextMoves[1] - 1), thischip.id - 1);
     }
