@@ -86,10 +86,6 @@ button#playAgain {
     cursor: pointer;
     display: inline-block;
     margin: 15px 30px;
-/* animate and time the transitions*/
-    -webkit-transition: all 0.4s;
-    -moz-transition: all 0.4s;
-    transition: all 0.4s;
 }
 
 button#playAgain:hover{
@@ -102,17 +98,14 @@ button#playAgain:hover{
 h1, h2 {
   text-align: center;
   width: 49%;
-  /* color: white; */
+  min-width: 600px;
   margin: 10px auto;
   text-transform: uppercase;
   padding: 1px;
-  font-family: 'Raleway', cursive;
+  font-family: 'Raleway';
   font-weight: 100;
   position: relative;
   background: -webkit-linear-gradient(left, #00000000, #eeeeeea6, transparent);
-  background: -moz-linear-gradient(left, black, #eee, black);
-  background: -ms-linear-gradient(left, black, #eee, black);
-  background: -o-linear-gradient(left, black, #eee, black);
 }
 
 h1 span {
