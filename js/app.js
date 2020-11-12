@@ -38,6 +38,7 @@ function init() {
         })
     }
     renderBoard(true);
+    message.innerHTML = `<span class='${turn > 0 ? 'red' : 'black'}'>${turn > 0 ? 'Red' : 'Black'}'s </span> turn`;
 }
 
 function renderBoard(firstrun) {
@@ -147,7 +148,7 @@ function handleClick() {
         message.textContent = `red wins`;
         return;
     }
-    message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
+    
 
     if (this.matches(".highlighted")) {
         this.classList.toggle("highlighted");
@@ -191,7 +192,15 @@ function handleClick() {
         }
 
         console.log(anotherMove, Math.abs(from - (this.id - 1)));
-        message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
+        if (!document.getElementsByClassName("redchips").length) {
+            message.textContent = `black wins`;
+            return;
+        }
+        if (!document.getElementsByClassName("blackchips").length) {
+            message.textContent = `red wins`;
+            return;
+        }
+        message.innerHTML = `<span class='${turn > 0 ? 'red' : 'black'}'>${turn > 0 ? 'Red' : 'Black'}'s </span> turn`;
         // if (anotherMove)anothermoves = 1;
         if (anotherMove && Math.abs(from - (this.id - 1)) > 10) {
             // turn = turn+anotherMove;
@@ -201,7 +210,15 @@ function handleClick() {
         anothermoves = 0;
         // anotherMove = 1;
         turn = Math.abs(turn - 1);
-        message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
+        if (!document.getElementsByClassName("redchips").length) {
+            message.textContent = `black wins`;
+            return;
+        }
+        if (!document.getElementsByClassName("blackchips").length) {
+            message.textContent = `red wins`;
+            return;
+        }
+        message.innerHTML = `<span class='${turn > 0 ? 'red' : 'black'}'>${turn > 0 ? 'Red' : 'Black'}'s </span> turn`;
         clearHighlights();
         return;
     } else clearHighlights();
