@@ -94,6 +94,7 @@ function renderBoard(firstrun) {
     }
 
 }
+
 function movePiece(from, to) {
     moves[to] = { ...moves[to], color: moves[from].color, empty: moves[from].empty, queen: moves[from].queen };
     moves[from] = { ...moves[from], color: null, empty: true, queen: false };
