@@ -26,6 +26,7 @@ button.addEventListener("click", init);
 init();
 
 function init() {
+    turn = 1;
     winner = null;
     moves = [];
     for (let i = 0; i < squares.length; i++) {
@@ -41,30 +42,41 @@ function init() {
 function renderBoard(firstrun) {
     let c = 0;
     let chips = 0;
+    let n = 8;
     if (firstrun) chips = 12;
     for (let i = 0; i < squares.length; i++) {
         square = squares[i];
         if (i % 8 == 0) c += 1;
         if ((i + c) % 2 == 1) {
+            // square.className = 'piece black';
             square.classList.add("black");
-
+            
             if (chips) {
                 // add black chips
+                squares[i].innerHTML = '';
                 moves[i] = { ...moves[i], empty: false, color: 'black', queen: false };
                 let bchip = document.createElement("div");
                 bchip.className = "chips blackchips";
                 square.appendChild(bchip);
-                square.classList.toggle("hasChip");
+                square.classList.add("hasChip");
 
                 // add red chips
                 if (squares.length - i > 0) {
+                    squares[squares.length - i - 1].innerHTML = '';
                     moves[squares.length - i - 1] = { ...moves[squares.length - i - 1], empty: false, color: 'red', queen: false }
                     let rchip = document.createElement("div");
                     rchip.className = "chips redchips";
                     squares[squares.length - i - 1].appendChild(rchip);
-                    squares[squares.length - i - 1].classList.toggle("hasChip");
+                    squares[squares.length - i - 1].classList.add("hasChip");
                 }
                 chips -= 1;
+            } else if (n){
+                squares[i].innerHTML = '';
+                square.className = '';
+                // if (!square.classList.contains('hasChip')) square.className = 'hasChip';
+                square.classList.add("black");
+                square.classList.add("piece");
+                n -= 1;
             }
 
             if (firstrun) continue;
@@ -124,6 +136,7 @@ function clearHighlights() {
 }
 
 function handleClick() {
+    // console.log("ehh");
     if (!document.getElementsByClassName("redchips").length) {
         message.textContent = `black wins`;
         return;
