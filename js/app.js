@@ -18,7 +18,6 @@ for (var i = 0; i < board.getElementsByClassName("piece").length; i++) {
         .getElementsByClassName("piece")
     [i].addEventListener("click", handleClick, false);
 }
-// board.addEventListener('click', handleClick);
 button.addEventListener("click", init);
 
 /*------ functions ----- */
