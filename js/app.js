@@ -26,38 +26,84 @@ init();
 
 function init() {
     winner = null;
-    renderBoard();
+    moves = [];
+    for (let i = 0; i < squares.length; i++) {
+        moves.push({
+            empty: true,
+            color: null,
+            queen: false
+        })
+    }
+    // moves = new Array(64).fill({
+    //     empty:true,
+    //     color:null,
+    //     queen:null
+    // });
+    // console.log(moves)
+    renderBoard(true);
 }
 
-function renderBoard() {
-    let c = 0;
-    let chips = 12;
-    for (let i = 0; i < squares.length; i++) {
-        const square = squares[i];
-        if (i % 8 == 0) c += 1;
-        if ((i + c) % 2 == 1) {
-            // console.log(square);
-            // console.log(i);
-            square.classList.toggle("black");
-            if (chips) {
-                // add black chips
-                var bchip = document.createElement("div");
-                bchip.className = "chips blackchips";
-                square.appendChild(bchip);
-                square.classList.toggle("hasChip");
+function renderBoard(firstrun) {
+    // if(!moves.length){
+        let c = 0;
+        let chips = 0;
+        if(firstrun) chips = 12;
+        // moves[1].empty = false;
+        for (let i = 0; i < squares.length; i++) {
+            square = squares[i];
+            // square.innerHTML = '';
+            // square.className = 'piece';
+            if (i % 8 == 0) c += 1;
+            if ((i + c) % 2 == 1) {
+                // console.log(square);
+                // console.log(i);
+                square.classList.add("black");
+                
+                if (chips) {
+                    // console.log('hello');
+                    // add black chips
+                    moves[i].empty = false;
+                    moves[i].color = 'black';
+                    moves[i].queen = false;
+                    let bchip = document.createElement("div");
+                    bchip.className = "chips blackchips";
+                    square.appendChild(bchip);
+                    square.classList.toggle("hasChip");
 
-                // add red chips
-                if (squares.length - i > 0) {
-                    var rchip = document.createElement("div");
-                    rchip.className = "chips redchips";
-                    // console.log(squares.length - i );
-                    squares[squares.length - i - 1].appendChild(rchip);
-                    squares[squares.length - i - 1].classList.toggle("hasChip");
+                    // add red chips
+                    if (squares.length - i > 0) {
+                        moves[squares.length - i - 1].empty = false;
+                        moves[squares.length - i - 1].color = 'red';
+                        moves[squares.length - i - 1].queen = false;
+                        let rchip = document.createElement("div");
+                        rchip.className = "chips redchips";
+                        // console.log(squares.length - i );
+                        squares[squares.length - i - 1].appendChild(rchip);
+                        squares[squares.length - i - 1].classList.toggle("hasChip");
+                    }
                     chips -= 1;
                 }
+                
+                if (firstrun) continue;
+                square.innerHTML = '';
+                square.className = 'piece';
+                square.classList.add("black");
+                if (!moves[i].empty){
+                    let bchip = document.createElement("div");
+                    bchip.className = `chips ${moves[i].queen ? 'queenchip' : ''} ${moves[i].color}chips`;
+                    square.appendChild(bchip);
+                    // if(moves[i].queen) square.firstElementChild.classList.add('queenchip')
+                    square.classList.toggle("hasChip");
+
+                }
+
             }
         }
-    }
+
+        console.log(moves)
+    // }else{
+
+    // }
 }
 let nextMove;
 
@@ -68,9 +114,18 @@ function movePiece(from, to) {
 
     // console.log(squares[from])
     // squares[from].classList.toggle(squares[from].classList[squares[from].classList.length-1])
-    console.log(from, to);
+    moves[to].color = moves[from].color;
+    moves[to].empty = moves[from].empty;
+    moves[to].queen = moves[from].queen;
+    moves[from].color = null;
+    moves[from].empty = true;
+    moves[from].queen = null;
+    // moves[to] = to;
+    console.log(moves);
+    // console.log(from, to);
     squares[to].appendChild(squares[from].firstElementChild);
     // squares[to].classList.toggle(squares[to].classList[squares[to].classList.length-1])
+    
     squares[to].classList.toggle("hasChip");
     squares[from].innerHTML = "";
     squares[from].classList.toggle("hasChip");
@@ -82,47 +137,50 @@ function movePiece(from, to) {
         squares[to].classList.forEach((name) => {
             if (name.substring(0, 3) === "rmv") {
                 console.log("heere");
+                moves[eval(name.substring(3, name.length))].color = null;
+                moves[eval(name.substring(3, name.length))].empty = true;
+                moves[eval(name.substring(3, name.length))].queen = null;
                 squares[eval(name.substring(3, name.length))].innerHTML = "";
-                squares[eval(name.substring(3, name.length))].classList.toggle(
-                    "hasChip"
-                );
-                squares[to].classList.remove(name);
+                // squares[eval(name.substring(3, name.length))].classList.toggle(
+                //     "hasChip"
+                // );
+                // squares[to].classList.remove(name);
             }
-            if (!isNaN(name)) squares[to].classList.remove(name);
+            // if (!isNaN(name)) squares[to].classList.remove(name);
             // console.log(name)
         });
         // }
 
-        var elements = document.getElementsByClassName("black");
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].classList.forEach((name) => {
-                if (name.substring(0, 3) === "rmv") {
-                    // squares[eval(name.substring(3,name.length))].innerHTML = '';
-                    // squares[eval(name.substring(3,name.length))].classList.toggle('hasChip');
-                    elements[i].classList.remove(name);
-                }
-                if (!isNaN(name)) elements[i].classList.remove(name);
-                // console.log(name)
-            });
-        }
+        // var elements = document.getElementsByClassName("black");
+        // for (var i = 0; i < elements.length; i++) {
+        //     elements[i].classList.forEach((name) => {
+        //         if (name.substring(0, 3) === "rmv") {
+        //             // squares[eval(name.substring(3,name.length))].innerHTML = '';
+        //             // squares[eval(name.substring(3,name.length))].classList.toggle('hasChip');
+        //             elements[i].classList.remove(name);
+        //         }
+        //         if (!isNaN(name)) elements[i].classList.remove(name);
+        //         // console.log(name)
+        //     });
+        // }
 
         console.log("remove chip");
     } else {
         //remove class remove# from every element
-        let elements = document.getElementsByClassName("black");
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].classList.forEach((name) => {
-                if (name.substring(0, 3) === "rmv") {
-                    // squares[eval(name.substring(3,name.length))].innerHTML = '';
-                    // squares[eval(name.substring(3,name.length))].classList.toggle('hasChip');
-                    elements[i].classList.remove(name);
-                }
-                if (!isNaN(name)) elements[i].classList.remove(name);
-                // console.log(name)
-            });
-        }
+        // let elements = document.getElementsByClassName("black");
+        // for (var i = 0; i < elements.length; i++) {
+        //     elements[i].classList.forEach((name) => {
+        //         if (name.substring(0, 3) === "rmv") {
+        //             // squares[eval(name.substring(3,name.length))].innerHTML = '';
+        //             // squares[eval(name.substring(3,name.length))].classList.toggle('hasChip');
+        //             elements[i].classList.remove(name);
+        //         }
+        //         if (!isNaN(name)) elements[i].classList.remove(name);
+        //         // console.log(name)
+        //     });
+        // }
     }
-
+    renderBoard(false);
     if (!document.getElementsByClassName("redchips").length) {
         message.textContent = `black wins`;
         return;
@@ -236,13 +294,15 @@ function handleClick() {
             !this.firstElementChild.classList.contains("queenchip") &&
             this.id >= 57
         )
-            this.firstElementChild.classList.add("queenchip");
+        {moves[this.id -1].queen = true;
+            this.firstElementChild.classList.add("queenchip");}
         if (
             this.firstElementChild.classList.contains("redchips") &&
             !this.firstElementChild.classList.contains("queenchip") &&
             this.id <= 8
         )
-            this.firstElementChild.classList.add("queenchip");
+            {moves[this.id - 1].queen = true;
+            this.firstElementChild.classList.add("queenchip");}
 
         turn = Math.abs(turn - 1);
         message.textContent = `Player ${turn > 0 ? 1 : 2}'s turn`;
@@ -285,17 +345,20 @@ function handleClick() {
         ischip = this;
         moveChip(ischip, "red", false);
     }
+    // renderBoard(false);
 }
 
 
-console.log('wadaaap');
+// console.log('wadaaap');
 
 
 function moveChip(thischip, chiptype, queen) {
+
     chip_to_take = chiptype;
     if (chiptype == "black" || queen) {
         if (!queen) chip_to_take = "red";
         nextMoves = [eval(thischip.id) + 9, eval(thischip.id) + 7];
+        // moves[]
         //get option for black
         if (
             nextMoves[0] - 1 < 64 &&
@@ -398,5 +461,7 @@ function moveChip(thischip, chiptype, queen) {
 
         // }
     }
+    // ;
+    // if (queen) renderBoard(false);
     if (queen) return;
 }
