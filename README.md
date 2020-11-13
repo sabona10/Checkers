@@ -1,2 +1,5 @@
 # Checkers
-Checkers Game
+Classic Checkers Game for two players
+
+# Screenshot
+![image](queen.png)
