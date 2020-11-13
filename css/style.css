@@ -1,6 +1,4 @@
 body {
-  /* background: url("../background.png")
-    center no-repeat; */
   text-align: center;
   background: rgb(2,0,36);
   background: linear-gradient(12deg, rgba(2,0,36,1) 0%, rgba(121,92,9,1) 35%, rgba(0,212,255,1) 100%);
