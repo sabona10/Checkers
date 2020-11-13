@@ -2,7 +2,7 @@
 Classic Checkers Game for two players
 
 ## Screenshot
-![image](Game.PNG)
+![image](pics/Game.PNG)
 
 ### Installation
 You can try the deployed game [here](https://sabona10.github.io/Checkers/)
