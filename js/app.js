@@ -220,10 +220,10 @@ function handleClick() {
             return;
         }
         message.innerHTML = `<span class='${turn > 0 ? 'red' : 'black'}'>${turn > 0 ? 'Red' : 'Black'}'s </span> turn`;
-        renderBoard(false);
+        clearHighlights();
         return;
-    } 
-    renderBoard(false);
+    } else clearHighlights();
+    clearHighlights();
     //turn regulator line **
     if (this.firstElementChild != null && this.firstElementChild.classList.contains("redchips") != turn) return;
     if (this.matches(".hasChip") && this.firstElementChild.classList.contains("blackchips") && this.firstElementChild.classList.contains("queenchip")) moveChip(this, "red", true);
