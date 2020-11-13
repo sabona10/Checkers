@@ -2,4 +2,4 @@
 Classic Checkers Game for two players
 
 # Screenshot
-![image](game.png)
+![image](Game.png)
