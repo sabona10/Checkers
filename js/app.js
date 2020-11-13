@@ -139,6 +139,7 @@ function clearHighlights() {
 }
 
 function handleClick() {
+    // renderBoard(false);
     // console.log("ehh");
     if (!document.getElementsByClassName("redchips").length) {
         message.textContent = `black wins`;
@@ -219,10 +220,10 @@ function handleClick() {
             return;
         }
         message.innerHTML = `<span class='${turn > 0 ? 'red' : 'black'}'>${turn > 0 ? 'Red' : 'Black'}'s </span> turn`;
-        clearHighlights();
+        renderBoard(false);
         return;
-    } else clearHighlights();
-    clearHighlights();
+    } 
+    renderBoard(false);
     //turn regulator line **
     if (this.firstElementChild != null && this.firstElementChild.classList.contains("redchips") != turn) return;
     if (this.matches(".hasChip") && this.firstElementChild.classList.contains("blackchips") && this.firstElementChild.classList.contains("queenchip")) moveChip(this, "red", true);
